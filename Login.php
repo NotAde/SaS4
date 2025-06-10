@@ -1,45 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skenaver Login</title>
-  <link rel="stylesheet" href="login.css" />
-</head>
-<body>
-
-  <div class="background"></div>
-
-  <div class="logo">
-    <img src="asset/Skenaaver.png" alt="">
-  </div>
-
-  <div class="login-box">
-    <h2>Login</h2>    
-    <form method="POST" action="">
-      <div class="input-container">
-      <label for="Email"> Email</label>
-      <input type="email" name="email" placeholder="Enter Email" required />
-      </div>
-
-      <div class="input-container">
-      <label for="Password">Password</label>
-        <input type="password" name="password" placeholder="Enter Password" required />
-      </div>
-
-      <div class="forgot-password">
-        <a href="lupa-pass.php">Forgot Password?</a>
-      </div>
-
-      <input type="submit" value="Login" />
-    </form>
-
-    <p class="bottom-text">
-      Don't have an account? <a href="Reg.php">Register</a>
-    </p>
-  </div>
-
-  <?php
+<?php
 session_start(); // WAJIB: agar session bisa digunakan
 
 include 'koneksi.php';
@@ -83,6 +42,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 ?>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skenaver Login</title>
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+
+  <div class="background"></div>
+
+  <div class="logo">
+    <img src="asset/Skenaaver.png" alt="">
+  </div>
+
+  <div class="login-box">
+    <h2>Login</h2>    
+    <form method="POST" action="">
+      <div class="input-container">
+      <label for="Email"> Email</label>
+      <input type="email" name="email" placeholder="Enter Email" required />
+      </div>
+
+      <div class="input-container">
+      <label for="Password">Password</label>
+        <input type="password" name="password" placeholder="Enter Password" required />
+      </div>
+
+      <div class="forgot-password">
+        <a href="lupa-pass.php">Forgot Password?</a>
+      </div>
+
+      <input type="submit" value="Login" />
+    </form>
+
+    <p class="bottom-text">
+      Don't have an account? <a href="Reg.php">Register</a>
+    </p>
+  </div>
+
+  
 
   <script src="script.js"></script>
 </body>
