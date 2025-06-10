@@ -1,3 +1,4 @@
+/* Reset dasar */
 * {
   margin: 0;
   padding: 0;
@@ -22,7 +23,7 @@ body {
 }
 
 /* Login box */
-.login-box {
+.regist-box {
   background: linear-gradient(to bottom right, #0e1c66, #3a52b5);
   padding: 30px 25px;
   border-radius: 15px;
@@ -37,10 +38,17 @@ body {
   margin-bottom: 20px;
 }
 
+#regf{
+    position: relative;
+    bottom: 10px;
+}
+
 /* Input container */
 .input-container {
   position: relative;
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
 }
 
 .input-container input {
@@ -71,6 +79,9 @@ input[type="submit"]:hover {
 .bottom-text {
   margin-top: 15px;
   font-size: 14px;
+  position: relative;
+  bottom: 40px;
+  color: white;
 }
 
 .bottom-text a {
@@ -88,27 +99,14 @@ input[type="submit"]:hover {
     width: 150px;
   }
 }
-.forgot-password {
-  text-align: right;
-  margin-bottom: 10px;
-}
 
-.forgot-password a {
-  font-size: 13px;
-  color: #ccc;
-  text-decoration: underline;
-}
-
-.forgot-password a:hover {
-  color: #fff;
-}
 .background {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: url('asset/BG.png') no-repeat center center fixed;
+  background: url('../resource/backgrounds.jpg') no-repeat center center fixed;
   background-size: cover;
   z-index: -1;
 } 
