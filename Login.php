@@ -1,49 +1,39 @@
 <?php
-session_start(); // WAJIB: agar session bisa digunakan
+session_start(); // ⛔ WAJIB di baris pertama sebelum ada output HTML
 
 include 'koneksi.php';
 
+$loginError = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $email = $_POST["email"];
   $password = $_POST["password"]; 
 
-  $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
-  $stmt->bind_param("ss", $email, $password);
+  $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+  $stmt->bind_param("s", $email);
   $stmt->execute();
   $result = $stmt->get_result();
 
   if ($result->num_rows > 0) {
-      $user = $result->fetch_assoc();
+    $user = $result->fetch_assoc();
 
-      // ✅ Simpan data login ke session
+    if (password_verify($password, $user['password'])) {
       $_SESSION['user_id'] = $user['user_id'];
       $_SESSION['username'] = $user['username'];
       $_SESSION['role'] = $user['role'];
 
-      if ($user['role'] === 'admin') {
-        echo "<p style='color:green; text-align:center;'>Login Berhasil Admin</p>";
-        echo "<script>
-                setTimeout(function() {
-                  window.location.href = 'server.php';
-                }, 2000);
-              </script>";
-        exit;
-      } else {
-        echo "<p style='color:green; text-align:center;'>Login Berhasil</p>";
-        echo "<script>
-                setTimeout(function() {
-                  window.location.href = 'server.php';
-                }, 2000);
-              </script>";
-        exit;
-      }
+      $redirect = ($user['role'] === 'admin') ? 'server.php' : 'server.php'; // Bisa beda halaman
+      header("Location: $redirect");
+      exit;
+    } else {
+      $loginError = "Password salah.";
+    }
   } else {
-      echo "<p style='color:red; text-align:center;'>Login gagal. Email atau password salah.</p>";
+    $loginError = "Email tidak ditemukan.";
   }
 }
 ?>
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -61,14 +51,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <div class="login-box">
     <h2>Login</h2>    
+
+    <?php if (!empty($loginError)) : ?>
+      <p style="color: red; text-align:center;"><?= $loginError ?></p>
+    <?php endif; ?>
+
     <form method="POST" action="">
       <div class="input-container">
-      <label for="Email"> Email</label>
-      <input type="email" name="email" placeholder="Enter Email" required />
+        <label for="Email">Email</label>
+        <input type="email" name="email" placeholder="Enter Email" required />
       </div>
 
       <div class="input-container">
-      <label for="Password">Password</label>
+        <label for="Password">Password</label>
         <input type="password" name="password" placeholder="Enter Password" required />
       </div>
 
@@ -83,8 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       Don't have an account? <a href="Reg.php">Register</a>
     </p>
   </div>
-
-  
 
   <script src="script.js"></script>
 </body>
